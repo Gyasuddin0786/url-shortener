@@ -27,7 +27,12 @@ app.get('/:shortenedId', async (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
-
+app.get('/',(req,res)=>{
+  res.send({
+    activeStatus:true,
+    error:false
+  })
+});
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
