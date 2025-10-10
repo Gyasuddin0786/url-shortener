@@ -12,11 +12,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-// allowed origins
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://apnaurl-shotener.netlify.app"
-];
 // ✅ Redirect route before other routes
 app.get('/:shortenedId', async (req, res) => {
   try {
@@ -30,14 +25,12 @@ app.get('/:shortenedId', async (req, res) => {
 });
 // origin setup here
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
+  origin: [
+    "http://localhost:5173", // local development
+    "https://apnaurl-shotener.netlify.app" // netlify deployed site
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
