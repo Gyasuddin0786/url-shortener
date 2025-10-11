@@ -1,14 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000',  // Set the base URL for your API
+  baseURL:
+    import.meta.env.MODE === "production"
+      ? "https://url-shortener-tau-tan.vercel.app/" // 🔹 replace with your real backend URL
+      : "http://localhost:5000",
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;  // Attach token to all requests
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
