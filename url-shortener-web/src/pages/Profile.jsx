@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from '../services/api';
-
+import {BASE_URL} from '../services/api';
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ const Profile = () => {
 
     if (token) {
       axios
-        .get('http://localhost:5000/auth/profile', {
+        .get(`${BASE_URL}/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
