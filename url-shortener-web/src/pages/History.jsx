@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../services/api";
-
+import {BASE_URL} from '../services/api';
 const History = () => {
   const [urls, setUrls] = useState([]);
 
@@ -8,7 +8,7 @@ const History = () => {
     const fetchHistory = async () => {
       try {
         const token = localStorage.getItem("token"); // Assuming token is in localStorage
-        const res = await axios.get("/url/history", {
+        const res = await axios.get(`${BASE_URL}/url/history`, {
           headers: {
             Authorization: `Bearer ${token}`, // Send token in headers
           },
