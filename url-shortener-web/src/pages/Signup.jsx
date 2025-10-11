@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from '../services/api';
-
+import {BASE_URL} from '../services/api';
 const Signup = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Signup = () => {
  const signup = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post('http://localhost:5000/auth/signup', form);
+    const res = await axios.post(`${BASE_URL}/auth/signup`, form);
     localStorage.setItem('token', res.data.token);
     toast.success('Signup successful! Redirecting to login...');
     setTimeout(() => navigate('/login'), 1500);
