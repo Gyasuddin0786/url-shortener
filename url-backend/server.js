@@ -10,7 +10,7 @@ import Url from './models/UrlModel.js';
 dotenv.config();
 const app = express();
 
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.json());
 // ✅ Redirect route before other routes
 app.get('/:shortenedId', async (req, res) => {
