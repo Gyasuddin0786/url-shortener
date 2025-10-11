@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from '../services/api';
+import {BASE_URL} from '../services/api';
 import { Pie, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -21,7 +22,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('/url/stats', {
+        const res = await axios.get(`${BASE_URL}/url/stats`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data);
