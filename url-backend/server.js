@@ -40,6 +40,7 @@ app.get('/',(req,res)=>{
     activeStatus:true,
     error:false
   })
+  console.log("Server is running successfully...");
 });
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {

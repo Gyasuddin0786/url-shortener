@@ -1,10 +1,12 @@
 import axios from "axios";
 
+export const BASE_URL =
+  import.meta.env.MODE === "production"
+    ? "https://url-shortener-eyrl.onrender.com" // 🔹 replace with your real backend URL
+    : "http://localhost:5000";
+
 const api = axios.create({
-  baseURL:
-    import.meta.env.MODE === "production"
-      ? "https://url-shortener-tau-tan.vercel.app/" // 🔹 replace with your real backend URL
-      : "http://localhost:5000",
+  baseURL: BASE_URL,
 });
 
 api.interceptors.request.use(

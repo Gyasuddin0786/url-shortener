@@ -10,7 +10,7 @@ const Signup = () => {
  const signup = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post('http://localhost:5000/auth/signup', form);
+    const res = await axios.post(`${BASE_URL}/auth/signup`, form);
     localStorage.setItem('token', res.data.token);
     toast.success('Signup successful! Redirecting to login...');
     setTimeout(() => navigate('/login'), 1500);
