@@ -26,7 +26,7 @@ app.get('/:shortenedId', async (req, res) => {
 // origin setup here
 app.use(cors({
   origin: [
-    "https://apnaurl-shortener.netlify.app/", // netlify deployed site
+    "https://apnaurl-shortener.netlify.app", // netlify deployed site
     "http://localhost:5173" // local development
     //"https://url-shortener-web-eta.vercel.app/"
   ],
