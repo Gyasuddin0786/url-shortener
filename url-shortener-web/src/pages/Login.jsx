@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../services/api";
-
+import {BASE_URL} from "../services/api";
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://url-shortener-1-b5ok.onrender.com", form);
+      const res = await axios.post(`${BASE_URL}/auth/login`, form);
       localStorage.setItem("token", res.data.token);
       toast.success("Login successful!");
       navigate("/");
