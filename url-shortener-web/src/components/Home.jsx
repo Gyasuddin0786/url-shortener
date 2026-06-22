@@ -25,7 +25,7 @@ const Home = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/url/shorten",
+        "/url/shorten",
         { originalUrl: url },
         { headers: { Authorization: `Bearer ${token}` } }
       );

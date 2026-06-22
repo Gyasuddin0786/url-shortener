@@ -19,7 +19,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/auth/login", form);
+      const res = await axios.post("https://url-shortener-1-b5ok.onrender.com", form);
       localStorage.setItem("token", res.data.token);
       toast.success("Login successful!");
       navigate("/");

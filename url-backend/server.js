@@ -10,8 +10,10 @@ import Url from './models/UrlModel.js';
 dotenv.config();
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+  origin: "https://url-shortener-1-b5ok.onrender.com",
+  credentials: true,
+}));app.use(bodyParser.json());
 
 // ✅ Redirect route before other routes
 app.get('/:shortenedId', async (req, res) => {

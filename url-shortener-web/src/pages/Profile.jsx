@@ -11,7 +11,7 @@ const Profile = () => {
 
     if (token) {
       axios
-        .get('http://localhost:5000/auth/profile', {
+        .get('/auth/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
