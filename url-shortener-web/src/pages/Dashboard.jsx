@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from '../services/api';
-import {BASE_URL} from '../services/api';
+import { BASE_URL } from '../services/api';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { Pie, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -17,6 +18,7 @@ ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tool
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -26,8 +28,10 @@ const Dashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data);
+        setLoading(false);
       } catch (err) {
         console.error('Failed to load stats', err);
+        setLoading(false);
       }
     };
 
@@ -62,7 +66,9 @@ const Dashboard = () => {
     <div className="container" style={{marginTop:"14vh"}}>
       <h3>Dashboard - URL Stats</h3>
 
-      {stats ? (
+      {loading ? (
+        <div className="py-8"><LoadingSpinner text="Loading statistics..." /></div>
+      ) : stats ? (
         <div className="row mt-5">
           <div className="col-md-6">
             <div className="card shadow-sm p-3">
@@ -89,7 +95,7 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        <p>Loading statistics...</p>
+        <p className="py-6 text-gray-600">No statistics available.</p>
       )}
     </div>
   );

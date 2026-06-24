@@ -3,99 +3,74 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [dark, setDark] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.body.className = dark
-      ? "bg-dark text-light"
-      : "bg-light text-dark";
+    const storedMode = localStorage.getItem("theme");
+    const initialDark = storedMode ? storedMode === "dark" : false;
+    setDark(initialDark);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("theme", dark ? "dark" : "light");
+    if (dark) {
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("bg-slate-950", "text-white");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("bg-slate-950", "text-white");
+    }
   }, [dark]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setMenuOpen(false);
     navigate("/login");
   };
 
   return (
-    <nav
-      className={`navbar navbar-expand-lg ${
-        dark ? "navbar-dark bg-dark" : "navbar-light bg-light"
-      } shadow-sm fixed-top`}
-    >
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white text-slate-900 shadow-sm backdrop-blur transition duration-300 dark:border-slate-800 dark:bg-slate-950/95 dark:text-slate-100">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <button onClick={() => navigate('/')} className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
           URL Shortener
-        </a>
+        </button>
 
-        <div className="d-flex align-items-center">
-          {/* Theme Toggle Button */}
+        <div className="flex items-center gap-3">
           <button
-            className="btn btn-outline-light me-2"
             onClick={() => setDark(!dark)}
-            title="Toggle Theme"
+            title="Toggle theme"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-900 shadow-sm transition hover:border-slate-400 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-800"
           >
             {dark ? "☀️" : "🌙"}
           </button>
 
-          {/* Profile Dropdown */}
-          <div className="dropdown">
+          <div className="relative">
             <button
-              className="btn btn-outline-light dropdown-toggle"
-              type="button"
-              id="dropdownProfile"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-900 shadow-sm transition hover:border-slate-400 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-800"
+              title="Open profile menu"
             >
               👤
             </button>
-            <ul
-              className="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownProfile"
-            >
-              <li>
-                <button
-                  className="dropdown-item"
-                  onClick={() => navigate("/dashboard")}
-                >
+
+            {menuOpen && (
+              <div className="absolute right-0 mt-2 w-48 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+                <button onClick={() => { setMenuOpen(false); navigate('/dashboard'); }} className="w-full px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">
                   📊 Dashboard
                 </button>
-              </li>
-              <li>
-                <hr className="dropdown-divider mb-0 mt-0" />
-              </li>
-
-              <li>
-                <button
-                  className="dropdown-item"
-                  onClick={() => navigate("/history")}
-                >
+                <button onClick={() => { setMenuOpen(false); navigate('/history'); }} className="w-full px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">
                   📜 History
                 </button>
-              </li>
-              <li>
-                <hr className="dropdown-divider mb-0 mt-0" />
-              </li>
-
-              <li>
-                <button
-                  className="dropdown-item"
-                  onClick={() => navigate("/profile")}
-                >
+                <button onClick={() => { setMenuOpen(false); navigate('/profile'); }} className="w-full px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">
                   👤 Profile
                 </button>
-              </li>
-              <li>
-                <hr className="dropdown-divider mb-0 mt-0" />
-              </li>
-              <li>
-                <button
-                  className="dropdown-item text-danger"
-                  onClick={handleLogout}
-                >
+                <div className="border-t border-slate-200 dark:border-slate-700"></div>
+                <button onClick={handleLogout} className="w-full px-4 py-3 text-left text-sm text-red-600 transition hover:bg-slate-50 dark:hover:bg-slate-800">
                   🚪 Logout
                 </button>
-              </li>
-            </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
